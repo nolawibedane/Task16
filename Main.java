@@ -16,9 +16,11 @@ public class Main {
         String restaurantName = scanner.nextLine();
         System.out.print("Restaurant Location: ");
         String restaurantLocation = scanner.nextLine();
+        System.out.print("Restaurant Phone Number: ");
+        String restaurantPhoneNumber = scanner.nextLine();
 
         // Create a Restaurant object with the captured details and add it to the list
-        Restaurant restaurant = new Restaurant(restaurantName, restaurantLocation);
+        Restaurant restaurant = new Restaurant(restaurantName, restaurantLocation, restaurantPhoneNumber);
         restaurants.add(restaurant);
 
         System.out.println("Enter customer details:");
@@ -48,17 +50,30 @@ public class Main {
                     writer.println(
                             "You have ordered the following from " + restaurantName + " in " + restaurantLocation);
                     writer.println("");
-                    writer.println(cust.quantity + " " + cust.foodOrder + " " + cust.price);
+
+                    // Print food items with quantity, name, price, and total
+                    writer.println("Food Items:");
+                    double totalPrice = 0.0; // To keep track of the total price
+                    for (FoodItem item : cust.foodItems) {
+                        double itemTotal = item.getQuantity() * item.getPrice();
+                        writer.println(
+                                item.getQuantity() + " " + item.getName() + " " + item.getPrice() + " (Total: "
+                                        + itemTotal + ")");
+                        totalPrice += itemTotal; // Add the item's total to the overall total
+                    }
+
                     writer.println("");
-                    writer.println("Total: " + cust.quantity * cust.price);
+                    writer.println("Total Price of Food Items: " + totalPrice);
                     writer.println("");
                     writer.println("Special Instructions: " + cust.specialInstruct);
                     writer.println("");
                     writer.println(
-                            bestDriver.name + " is the nearest to you so they will be delivering your order to you at: "
+                            bestDriver.name
+                                    + " is the nearest to you, so they will be delivering your order to you at: "
                                     + cust.suburbAndStreet);
                     writer.println("");
-                    writer.println("If you need to contact the restaurant, their phone number is 098 765 4321");
+                    writer.println(
+                            "If you need to contact the restaurant, their phone number " + restaurantPhoneNumber);
                     bestDriver.load++;
                 } else {
                     // If no suitable driver was found, write an appropriate message to invoice.txt
@@ -89,28 +104,40 @@ public class Main {
         String emailAddress = scanner.nextLine();
         System.out.print("Phone Number: ");
         String phoneNumber = scanner.nextLine();
-        System.out.print("Your Food Order: ");
-        String foodOrder = scanner.nextLine();
-        int quantity = 0;
-        double price = 0.0;
 
-        // Exception handling for input parsing
-        try {
-            System.out.print("How Many Would You Like: ");
-            quantity = scanner.nextInt();
-            System.out.print("How Much Does Each Cost: ");
-            price = scanner.nextDouble();
-            scanner.nextLine(); // Consume newline
-        } catch (InputMismatchException e) {
-            e.printStackTrace();
-            System.err.println("Invalid input. Please enter valid quantity and price.");
-            System.exit(1); // Exit the program due to invalid input
+        List<FoodItem> foodItems = new ArrayList<>();
+
+        String anotherItem = "yes";
+
+        while (anotherItem.equalsIgnoreCase("yes")) {
+            System.out.print("Your Food Order: ");
+            String order = scanner.nextLine();
+            int quantity = 0;
+            double price = 0.0;
+
+            try {
+                System.out.print("How Many Would You Like: ");
+                quantity = scanner.nextInt();
+                System.out.print("How Much Does Each Cost: ");
+                price = scanner.nextDouble();
+                scanner.nextLine(); // Consume newline
+            } catch (InputMismatchException e) {
+                e.printStackTrace();
+                System.err.println("Invalid input. Please enter valid quantity and price.");
+                System.exit(1); // Exit the program due to invalid input
+            }
+
+            foodItems.add(new FoodItem(order, quantity, price));
+
+            System.out.print("Add another food item? (yes/no): ");
+            anotherItem = scanner.nextLine();
         }
 
         System.out.print("Special Instructions: ");
         String specialInstruct = scanner.nextLine();
-        return new Customer(name, city, suburbAndStreet, emailAddress, phoneNumber, foodOrder, quantity, price,
-                specialInstruct);
+
+        // Create the Customer object with the collected details
+        return new Customer(name, city, suburbAndStreet, emailAddress, phoneNumber, foodItems, specialInstruct);
     }
 
     // Method to read driver details from a file with exception handling

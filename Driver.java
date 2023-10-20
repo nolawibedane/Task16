@@ -14,19 +14,4 @@ public class Driver {
         this.location = location;
         this.load = load;
     }
-
-    // Getter method to retrieve the driver's name
-    public String getName() {
-        return name;
-    }
-
-    // Getter method to retrieve the driver's location
-    public String getLocation() {
-        return location;
-    }
-
-    // Getter method to retrieve the driver's load
-    public int getLoad() {
-        return load;
-    }
 }
