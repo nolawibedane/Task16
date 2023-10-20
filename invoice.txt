@@ -1,17 +1,17 @@
-Order Number: 8794
-Customer: Nolawi Bedane
+Order Number: 4669
+Customer: Nolawi
 Email Address: nolawibedane@gmail.com
 Phone Number: 0837932776
 Location: Johannesburg
 
 You have ordered the following from Mcdonalds in Johannesburg
 
-2Big Mac64.0
+Food Items:
+3 Big Mac 50.0
+2 Mcflurry 35.0
 
-Total: 128.0
+Special Instructions: Nothing
 
-Special Intructions: Leave the tomatoes
+Eisa Wilson is the nearest to you, so they will be delivering your order to you at: Bedfordview 22 Munday Avenue
 
-Eisa Wilsonis the nearest to you so he will be delivering your order to you at: Bedfordview 22 Munday Avenue
-
-If you need to contact the restuarant, their phone number is 098 765 4321
+If you need to contact the restaurant, their phone number is 098 765 4321
